@@ -1,0 +1,1 @@
+To be able to run the scraper, you will need to download mysql and create a database named 'scraping_data'.
