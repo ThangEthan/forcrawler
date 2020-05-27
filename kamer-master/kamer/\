@@ -1,0 +1,66 @@
+# -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+import mysql.connector
+
+class KamerPipeline(object):
+
+    def __init__(self):
+        self.create_connection()
+        self.create_table()
+
+    def create_connection(self):
+        self.conn = mysql.connector.connect(
+                                        host = 'localhost',
+                                        user = 'root',
+                                        passwd = 'root',
+                                        database = 'scraping_data')
+        self.cursor = self.conn.cursor()
+
+    def create_table(self):
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS kamer(
+                            Id INT AUTO_INCREMENT PRIMARY KEY,
+                            Woonkamer TEXT,
+                            Keuken TEXT,
+                            Badkamer TEXT,
+                            Toilet TEXT,
+                            Internet TEXT,
+                            Energielabel TEXT,
+                            Huisgenoten TEXT,
+                            Geslacht TEXT,
+                            Huisdieren TEXT,
+                            Binnenroken TEXT,
+                            Inex TEXT,
+                            Price TEXT,
+                            Opleverniveau TEXT,
+                            Beschikbaarheid TEXT,
+                            Description TEXT,
+                            Ownername TEXT,
+                            Typeaanbieder TEXT,
+                            Actiefsinds TEXT,
+                            Laatstgezienop TEXT,
+                            Aantalkeerverhuurdviakamernet TEXT,
+                            Responserate TEXT,
+                            Reactietijd TEXT,
+                            Url TEXT,
+                            Street TEXT,
+                            City TEXT,
+                            Surface TEXT);""")
+
+    def process_item(self, item, spider):
+        self.store_database(item)
+    def store_database(self,item):
+        query = "INSERT INTO kamer("
+        values = ""
+        for k in item.keys():
+            query += str(k)+ ","
+            values += "'" + str(item[k]).replace("'",'"').replace(",", ";").strip("\n").strip("\t").strip() + "',"
+        query = query[0:-1] + ") values(" + values[0:-1] + ");"
+        self.cursor.execute(query)
+        self.conn.commit()
+
+    def update_datebase(self, item):
+        query = "UPDATE kamer SET Aantalkeerverhuurdviakamernet=" + item['Aantalkeerverhuurdviakamernet'] + "where url=" +item['url'] +";"
