@@ -1,5 +1,5 @@
 #!/bin/zsh
-
+# This script goes through all the pages contain houses that have reserved status
 export PATH=/home/uh/anaconda3/bin:$PATH
 source ~/anaconda3/etc/profile.d/conda.sh
 #conda init zsh
@@ -21,7 +21,7 @@ do
 		line=$(timeout 10 lynx -connect_timeout=10 --source https://www.funda.nl/koop/heel-nederland/in-onderhandeling/sorteer-datum-af/p$i > ~/house/some_random_house.html | wc -l)
                 #echo "$line results"
         done
-	scrapy crawl reserved > /dev/null 2>&1
+        scrapy crawl reserved > /dev/null 2>&1 # Scraping content and save its in reserved table
         nordvpn_refresh=$i%3
         if [[ $nordvpn_refresh -eq 0 ]]
         then

@@ -22,6 +22,6 @@ do
     if [[ $nordvpn_refresh -eq 0 ]]
     then
         echo "Refreshing vpn connection"
-        ~/refresh_vpn.sh > /dev/null 2>&1
+        ~/refresh_vpn.sh
     fi
 done < <(mysql --login-path=server -s -N scraping_data -e "select f.url from funda f left join link_compare l on f.url = l.url where l.url is null and f.Status = 'Beschikbaar';") # Test links in the database that aren't appear in all the scraped link. Some links still active but doesn't appear on the list
