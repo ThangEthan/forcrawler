@@ -1,0 +1,1 @@
+This scraper will scrape the date of house that was sold and update existing record in the database

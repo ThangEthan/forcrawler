@@ -1,0 +1,1 @@
+This scraper will scrape house that are on sale (status available) and save the results in to table fundarent in UH_server 

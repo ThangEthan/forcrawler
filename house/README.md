@@ -1,0 +1,2 @@
+This is a place to temporarily store the house page html doc before crawler goes over it to scrape its info
+link.txt is place to temporarily store the results of parselink.sh before it will be uploaded to the table link_compare
